@@ -6,9 +6,11 @@ public:
 	Game();
 	~Game();
 
-	void handleEvent();
+	void init();
+	void handleEvents();
 	void update();
 	void render();
+	void clear();
 	
 	bool running() { return isRunning; }
 

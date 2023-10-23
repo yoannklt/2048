@@ -1,7 +1,7 @@
 #include <iostream>
 #include "game.hpp"
 
-Game::game = nullptr;
+Game* game = nullptr;
 
 int main(int argc, char* argv[])
 {
@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
 	game->init();
 
-	while (game.isRunning)
+	while (game->running())
 	{
 		game->handleEvents();
 		game->update();
