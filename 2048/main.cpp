@@ -1,24 +1,26 @@
 #include <iostream>
 #include "game.hpp"
 
-Game* game = nullptr;
 
 int main(int argc, char* argv[])
 {
-	game = new Game();
+	int age;
+	std::cin >> age;
+	std::cout << age; 
+
+	Game game;
 
 	const int FPS = 60;
 
-	game->init();
+	game.render();
 
-	while (game->running())
+	while (game.running())
 	{
-		game->handleEvents();
-		game->update();
-		game->render();
+		game.handleEvents();
+		game.update();
+		//game->render();
 	}
 
-	game->clear();
 
 	return 0;
 }
