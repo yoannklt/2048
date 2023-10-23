@@ -1,13 +1,12 @@
 ﻿#include <iostream>
 #include "game.hpp"
 
-Game::Game() {
-
-}
+Game::Game() {}
 
 Game::~Game() {}
 
 void Game::handleEvents() {
+
 }
 
 void Game::update() {
