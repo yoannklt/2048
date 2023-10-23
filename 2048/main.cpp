@@ -1,25 +1,24 @@
 #include <iostream>
+#include "game.hpp"
 
-void displayGrid(int tableau[4][4]);
+Game::game = nullptr;
 
 int main(int argc, char* argv[])
 {
-	int tableau[4][4] = { 0 };
+	game = new Game();
 
-	displayGrid(tableau);
+	const int FPS = 60;
 
-	return 0;
-}
+	game->init();
 
-void displayGrid(int tableau[4][4])
-{
-	for (int i = 0; i < 4; i++)
+	while (game.isRunning)
 	{
-		for (int j = 0; j < 4; j++)
-		{
-			std::cout << tableau[i][j] << ' ';
-		}
-		std::cout << "\n";
+		game->handleEvents();
+		game->update();
+		game->render();
 	}
 
+	game->clear();
+
+	return 0;
 }
