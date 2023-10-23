@@ -4,20 +4,16 @@
 
 int main(int argc, char* argv[])
 {
-	int age;
-	std::cin >> age;
-	std::cout << age; 
 
 	Game game;
 
 	const int FPS = 60;
 
-	game.render();
-
 	while (game.running())
 	{
 		game.handleEvents();
 		game.update();
+		game.render();
 		//game->render();
 	}
 
