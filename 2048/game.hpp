@@ -16,6 +16,6 @@ public:
 
 private:
 	int grid[4][4] = { 0 };
-	bool isRunning = true;
+	bool isRunning;
 
 };
