@@ -11,16 +11,43 @@ void Game::handleEvents() {
 
 void Game::update() {
 	bool isMoving = true;
+	int i, y, iAdd, yAdd = 0;
 	while (isMoving) {
-		int i;
-		int y;
-		for (i; i < 4; i++) {
-			for (y; y < 3; y++) {
-				if (grid[i][y + 1] == 0) {
-					grid[i][y + 1] = grid[i][y];
+		iAdd = directionVect[0];
+		yAdd = directionVect[1];
+
+		switch (iAdd)
+		{
+		case 1:
+			i = 0;
+			break;
+		case -1:
+			i = 3;
+			break;
+		default:
+			break;
+		}
+
+		switch (yAdd)
+		{
+		case 1:
+			y = 0;
+			break;
+		case -1:
+			y = 3;
+			break;
+		default:
+			break;
+		}
+
+
+		for (i; i < 4; i + iAdd) {
+			for (y; y < 3; y + yAdd) {
+				if (grid[i + iAdd][y + yAdd] == 0) {
+					grid[i + iAdd][y + yAdd] = grid[i][y];
 					grid[i][y] = 0;
-				} else if (grid[i][y + 1] == grid[i][y + 1]) {
-					grid[i][y + 1] = grid[i][y]^2;
+				} else if (grid[i + iAdd][y + yAdd] == grid[i][y]) {
+					grid[i + iAdd][y + yAdd] = grid[i][y]^2;
 					grid[i][y] = 0;
 				}
 			}
