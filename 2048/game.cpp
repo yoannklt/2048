@@ -2,7 +2,10 @@
 #include "game.hpp"
 
 Game::Game() {
+	grid[1][0] = 2;
 	grid[1][1] = 2;
+	grid[1][2] = 2;
+	grid[1][3] = 2;
 }
 
 Game::~Game() {}
@@ -17,55 +20,55 @@ void Game::update() {
 	int y = 0;
 	int iAdd = 0;
 	int yAdd = 0;
-	while (isMoving) {
-		iAdd = directionVect[0];
-		yAdd = directionVect[1];
+	int indexOne = 0;
+	int indexOneNext = 0;
+	int indexTwo = 0;
+	int indexTwoNext = 0;
+	if (directionVect[1] == -1) {
+		iAdd = 3;
+	}
+	else if (directionVect[0] == -1) {
+		yAdd = 3;
+	}
 
-		switch (iAdd)
-		{
-		case 1:
-			i = 0;
-			break;
-		case -1:
-			i = 3;
-			break;
-		default:
-			break;
-		}
+	for (i; i < 4; i++) {
+		y = 0;
+		for (y; y < 3; y++) {
+			indexOne = y * directionVect[1] + iAdd + i * directionVect[0];
+			indexOneNext = (y + 1) * directionVect[1] + iAdd + i * directionVect[0];
 
-		switch (yAdd)
-		{
-		case 1:
-			y = 0;
-			break;
-		case -1:
-			y = 3;
-			break;
-		default:
-			break;
-		}
+			indexTwo = y * directionVect[0] + yAdd + i * directionVect[1];
+			indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * directionVect[1];
 
-		for (i; i < 4; i++) {
-			y = 0;
-			for (y; y < 3; y++) {
-				if (this->grid[i][y] == 0) {
-					break;
-				} else if (this->grid[i][y + 1] == 0) {
-					this->grid[i][y + 1] = this->grid[i][y];
-					this->grid[i][y] = 0;
-					std::cout << "la " << iAdd;
-				} else if (this->grid[i][y + 1] == this->grid[i][y]) {
-					this->grid[i][y + 1] = this->grid[i][y]^2;
-					this->grid[i][y] = 0;
-				}
+			if (this->grid[indexOneNext][indexTwoNext] == 0 and this->grid[indexOne][indexTwo] != 0) {
+
+				this->grid[indexOneNext][indexTwoNext] = this->grid[indexOne][indexTwo];
+				this->grid[indexOne][indexTwo] = 0;
+			}
+			else if (this->grid[indexOneNext][indexTwoNext] == this->grid[indexOne][indexTwo] and this->grid[indexOne][indexTwo] != 0) {
+				this->grid[indexOneNext][indexTwoNext] = this->grid[indexOne][indexTwo] * this->grid[indexOneNext][indexTwoNext];
+				this->grid[indexOne][indexTwo] = 0;
+				y++;
 			}
 		}
-		isMoving = false;
+
+		y = 0;
+		for (y; y < 3; y++) {
+			indexOne = y * directionVect[1] + iAdd + i * directionVect[0];
+			indexOneNext = (y + 1) * directionVect[1] + iAdd + i * directionVect[0];
+
+			indexTwo = y * directionVect[0] + yAdd + i * directionVect[1];
+			indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * directionVect[1];
+
+			if (this->grid[indexOneNext][indexTwoNext] == 0 and this->grid[indexOne][indexTwo] != 0) {
+				this->grid[indexOneNext][indexTwoNext] = this->grid[indexOne][indexTwo];
+				this->grid[indexOne][indexTwo] = 0;
+			}
+		}
 	}
 }
 
 void Game::render() {
-
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
 	std::cout << std::endl;
@@ -90,4 +93,5 @@ void Game::render() {
 	}
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
+	while(true) {}
 }
