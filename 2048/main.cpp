@@ -4,9 +4,6 @@
 
 int main(int argc, char* argv[])
 {
-	int age;
-	std::cin >> age;
-	std::cout << age; 
 
 	Game game;
 
