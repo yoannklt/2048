@@ -17,7 +17,7 @@ void displayGrid(int tableau[4][4])
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			std::cout << tableau[i][j];
+			std::cout << tableau[i][j] << ' ';
 		}
 		std::cout << "\n";
 	}
