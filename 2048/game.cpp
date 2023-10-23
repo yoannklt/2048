@@ -5,7 +5,7 @@ Game::Game() {}
 
 Game::~Game() {}
 
-void Game::handleEvent() {
+void Game::handleEvents() {
 
 }
 
