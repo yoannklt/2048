@@ -13,6 +13,7 @@ public:
 	void update();
 	void render();
 	void clear();
+	void slide();
 	
 	bool running() { return isRunning; }
 
