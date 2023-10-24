@@ -1,5 +1,11 @@
 ﻿#include <iostream>
+#include <conio.h>
 #include "game.hpp"
+
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
 
 Game::Game() {
 	checkEmptyCell();
@@ -11,42 +17,46 @@ Game::~Game() {}
 void Game::handleEvents() {
 	if (lost)
 		isRunning = false;
-	
-	int choice = 0;
 
 	std::cout << std::endl << "Swipe in any direction (1 -> up, 2 -> down, 3 -> left, 4 -> right)" << std::endl;
 
-	std::cin >> choice;
-
-	switch (choice)
+	bool badKey = true;
+	while (badKey)
 	{
-	case 1:
-		directionVect[1] = -1;
-		directionVect[0] = 0;
-		slide();
-		break;
+		badKey = false;
+		int c = 0; 
+		switch ((c = _getch() ))
+		{
+		case KEY_UP: 
+			directionVect[1] = -1;
+			directionVect[0] = 0;
+			slide();
+			break;
 
-	case 2: 
-		directionVect[1] = 1;
-		directionVect[0] = 0;
-		slide();
-		break;
+		case KEY_DOWN: 
+			directionVect[1] = 1;
+			directionVect[0] = 0;
+			slide();
+			break;
 
-	case 3:
-		directionVect[0] = -1;
-		directionVect[1] = 0;
-		slide();
-		break;
+		case KEY_LEFT: 
+			directionVect[0] = -1;
+			directionVect[1] = 0;
+			slide();
+			break;
 
-	case 4:
-		directionVect[0] = 1;
-		directionVect[1] = 0;
-		slide();
-		break;
+		case KEY_RIGHT: 
+			directionVect[0] = 1;
+			directionVect[1] = 0;
+			slide();
+			break;
 
-	default:
-		break;
+		default:
+			badKey = true;
+			break;
+		}
 	}
+	
 
 }
 
@@ -59,6 +69,9 @@ void Game::update() {
 }
 
 void Game::render() {
+
+	system("cls");
+
 	if (lost) {
 		return;
 	}
