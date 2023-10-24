@@ -18,7 +18,7 @@ void Game::handleEvents() {
 	if (lost)
 		isRunning = false;
 
-	std::cout << std::endl << "Swipe in any direction (1 -> up, 2 -> down, 3 -> left, 4 -> right)" << std::endl;
+	std::cout << std::endl << "Swipe in any direction using arrow keys " << std::endl;
 
 	bool badKey = true;
 	while (badKey)
