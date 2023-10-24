@@ -2,15 +2,45 @@
 #include "game.hpp"
 
 Game::Game() {
-	grid[1][0] = 2;
-	grid[1][1] = 2;
-	grid[1][2] = 2;
-	grid[1][3] = 2;
+	checkEmptyCell();
+	checkEmptyCell();
 }
 
 Game::~Game() {}
 
 void Game::handleEvents() {
+	
+	int choice = 0;
+
+	std::cout << std::endl << "Swipe in any direction (1 -> up, 2 -> down, 3 -> left, 4 -> right)" << std::endl;
+
+	std::cin >> choice;
+
+	switch (choice)
+	{
+	case 1:
+		directionVect[1] = -1;
+		directionVect[0] = 0;
+		break;
+
+	case 2: 
+		directionVect[1] = 1;
+		directionVect[0] = 0;
+		break;
+
+	case 3:
+		directionVect[0] = -1;
+		directionVect[1] = 0;
+		break;
+
+	case 4:
+		directionVect[0] = 1;
+		directionVect[1] = 0;
+		break;
+
+	default:
+		break;
+	}
 
 }
 
@@ -93,5 +123,44 @@ void Game::render() {
 	}
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
-	while(true) {}
 }
+
+int Game::randomValue()
+{
+	srand(static_cast<unsigned>(time(0)));
+
+	int randomValue = (rand() % 2) == 0 ? 2 : 4; 
+	return randomValue;
+}
+
+void Game::checkEmptyCell()
+{
+	int emptyCellNumber = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (grid[i][j] == 0)
+				emptyCellNumber++;
+		}
+	}
+	
+	int randomNumber = rand() % emptyCellNumber + 1;
+
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			if (grid[x][y] == 0)
+			{
+				randomNumber--;
+				if (randomNumber == 0) {
+					grid[x][y] = randomValue();
+					return;
+				}
+			}
+		}
+	}
+}
+

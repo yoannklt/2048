@@ -9,6 +9,8 @@ int main(int argc, char* argv[])
 
 	const int FPS = 60;
 
+	game.render();
+
 	while (game.running())
 	{
 		game.handleEvents();
