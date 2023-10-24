@@ -21,21 +21,25 @@ void Game::handleEvents() {
 	case 1:
 		directionVect[1] = -1;
 		directionVect[0] = 0;
+		slide();
 		break;
 
 	case 2: 
 		directionVect[1] = 1;
 		directionVect[0] = 0;
+		slide();
 		break;
 
 	case 3:
 		directionVect[0] = -1;
 		directionVect[1] = 0;
+		slide();
 		break;
 
 	case 4:
 		directionVect[0] = 1;
 		directionVect[1] = 0;
+		slide();
 		break;
 
 	default:
@@ -73,7 +77,6 @@ void Game::render() {
 	}
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
-	while(true) {}
 }
 
 void Game::slide() {
