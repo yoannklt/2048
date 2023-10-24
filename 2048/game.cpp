@@ -9,6 +9,8 @@ Game::Game() {
 Game::~Game() {}
 
 void Game::handleEvents() {
+	if (lost)
+		isRunning = false;
 	
 	int choice = 0;
 
@@ -21,21 +23,25 @@ void Game::handleEvents() {
 	case 1:
 		directionVect[1] = -1;
 		directionVect[0] = 0;
+		slide();
 		break;
 
 	case 2: 
 		directionVect[1] = 1;
 		directionVect[0] = 0;
+		slide();
 		break;
 
 	case 3:
 		directionVect[0] = -1;
 		directionVect[1] = 0;
+		slide();
 		break;
 
 	case 4:
 		directionVect[0] = 1;
 		directionVect[1] = 0;
+		slide();
 		break;
 
 	default:
@@ -45,10 +51,18 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-
+	checkEmptyCell();
+	if (lost) {
+		isRunning = false;
+		std::cout << std::endl << "Perdu c'est CIAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
+	}
 }
 
 void Game::render() {
+	if (lost) {
+		return;
+	}
+
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
 	std::cout << std::endl;
@@ -73,7 +87,6 @@ void Game::render() {
 	}
 	for (int x = 0; x < 4; x++)
 		std::cout << " _";
-	while(true) {}
 }
 
 void Game::slide() {
@@ -136,8 +149,6 @@ void Game::slide() {
 			}
 		}
 	}
-	for (int x = 0; x < 4; x++)
-		std::cout << " _";
 }
 
 int Game::randomValue()
@@ -161,6 +172,11 @@ void Game::checkEmptyCell()
 		}
 	}
 	
+	if (emptyCellNumber == 0) {
+		this->lost = true;
+		return;
+	}
+
 	int randomNumber = rand() % emptyCellNumber + 1;
 
 	for (int x = 0; x < 4; x++)

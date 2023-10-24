@@ -19,6 +19,5 @@ int main(int argc, char* argv[])
 		//game->render();
 	}
 
-
 	return 0;
 }
