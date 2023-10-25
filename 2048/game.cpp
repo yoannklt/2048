@@ -8,8 +8,12 @@
 #define KEY_RIGHT 77
 
 Game::Game() {
-	checkEmptyCell();
-	checkEmptyCell();
+	//checkEmptyCell();
+	//checkEmptyCell();
+	grid[0][0] = 2;
+	grid[0][1] = 2;
+	grid[0][2] = 2;
+	grid[0][3] = 2;
 }
 
 Game::~Game() {}
@@ -19,6 +23,7 @@ void Game::handleEvents() {
 		isRunning = false;
 
 	std::cout << std::endl << "Swipe in any direction using arrow keys " << std::endl;
+
 
 	bool badKey = true;
 	while (badKey)
@@ -48,7 +53,7 @@ void Game::handleEvents() {
 		case KEY_RIGHT: 
 			directionVect[0] = 1;
 			directionVect[1] = 0;
-			slide();
+			slideTwo();
 			break;
 
 		default:
@@ -64,7 +69,7 @@ void Game::update() {
 	checkEmptyCell();
 	if (lost) {
 		isRunning = false;
-		std::cout << std::endl << "Perdu c'est CIAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
+		std::cout << std::endl << "Perdu c'est CIAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << std::endl;
 	}
 }
 
@@ -120,9 +125,9 @@ void Game::slide() {
 		yAdd = 3;
 	}
 
-	for (i; i < 4; i++) {
+	for (i = 0; i < 4; i++) {
 		y = 0;
-		for (y; y < 3; y++) {
+		for (y = 0; y < 3; y++) {
 			indexOne = y * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
 			indexOneNext = (y + 1) * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
 
@@ -148,16 +153,33 @@ void Game::slide() {
 			j++;
 			y = 0;
 			for (y; y < 3; y++) {
-				indexOne = y * directionVect[1] + iAdd + i * directionVect[0];
-				indexOneNext = (y + 1) * directionVect[1] + iAdd + i * directionVect[0];
+				indexOne = y * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
+				indexOneNext = (y + 1) * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
 
-				indexTwo = y * directionVect[0] + yAdd + i * directionVect[1];
-				indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * directionVect[1];
+				indexTwo = y * directionVect[0] + yAdd + i * (directionVect[1] * directionVect[1]);
+				indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * (directionVect[1] * directionVect[1]);
 
 				if (this->grid[indexOneNext][indexTwoNext] == 0 and this->grid[indexOne][indexTwo] != 0) {
 					this->grid[indexOneNext][indexTwoNext] = this->grid[indexOne][indexTwo];
 					this->grid[indexOne][indexTwo] = 0;
 					isMoving = true;
+				}
+			}
+		}
+	}
+}
+
+void Game::slideTwo() {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 1; j < 4; j++) {
+			for (int k = 0; k < j-1; k++) {
+				if (grid[i][3 - j + k] != 0 and grid[i][3 - j + k + 1] == 0) {
+					grid[i][3 - j + k + 1] = grid[i][3 - j + k];
+					grid[i][3 - j + k] = 0;
+				}
+				else if (grid[i][3 - j + k] != 0 and grid[i][3 - j + k] == grid[i][3 - j + k + 1] and !grid[i][3 - j + k + 1].isMerge()) {
+					grid[i][3 - j + k + 1] = grid[i][3 - j + k] * 2;
+					grid[i][3 - j + k] = 0;
 				}
 			}
 		}
