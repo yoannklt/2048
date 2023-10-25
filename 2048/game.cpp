@@ -75,31 +75,28 @@ void Game::render() {
 	if (lost) {
 		return;
 	}
-
-	for (int x = 0; x < 4; x++)
-		std::cout << " _";
 	std::cout << std::endl;
 
 	for (int i = 0; i < 4; i++)
 	{
-		std::cout << "|";
+		std::cout << " " << "-----------------" << std::endl << " | ";
 		for (int j = 0; j < 4; j++)
 		{
 			switch (grid[i][j])
 			{
 			case 0:
-				std::cout << "  ";
+				std::cout << "  | ";
 				break;
 
 			default:
-				std::cout << grid[i][j] << " ";
+				std::cout << grid[i][j] << " | ";
 				break;
 			}
 		}
-		std::cout << "|\n";
+		std::cout << std::endl;
+
 	}
-	for (int x = 0; x < 4; x++)
-		std::cout << " _";
+	std::cout << " " << "-----------------" << std::endl;
 }
 
 void Game::slide() {
@@ -148,11 +145,11 @@ void Game::slide() {
 			j++;
 			y = 0;
 			for (y; y < 3; y++) {
-				indexOne = y * directionVect[1] + iAdd + i * directionVect[0];
-				indexOneNext = (y + 1) * directionVect[1] + iAdd + i * directionVect[0];
+				indexOne = y * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
+				indexOneNext = (y + 1) * directionVect[1] + iAdd + i * (directionVect[0] * directionVect[0]);
 
-				indexTwo = y * directionVect[0] + yAdd + i * directionVect[1];
-				indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * directionVect[1];
+				indexTwo = y * directionVect[0] + yAdd + i * (directionVect[1] * directionVect[1]);
+				indexTwoNext = (y + 1) * directionVect[0] + yAdd + i * (directionVect[1] * directionVect[1]);
 
 				if (this->grid[indexOneNext][indexTwoNext] == 0 and this->grid[indexOne][indexTwo] != 0) {
 					this->grid[indexOneNext][indexTwoNext] = this->grid[indexOne][indexTwo];
