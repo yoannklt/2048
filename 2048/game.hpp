@@ -16,6 +16,7 @@ public:
 	void checkEmptyCell();
 	int randomValue();
 	void slide();
+	void slideTwo();
 	
 	bool running() { return isRunning; }
 
