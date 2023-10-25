@@ -169,12 +169,12 @@ void Game::slide() {
 void Game::slideTwo() {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 1; j < 4; j++) {
-			for (int k = 0; k < j-1; k++) {
+			for (int k = 0; k < j; k++) {
 				if (grid[i][3 - j + k] != 0 and grid[i][3 - j + k + 1] == 0) {
 					grid[i][3 - j + k + 1] = grid[i][3 - j + k];
 					grid[i][3 - j + k] = 0;
 				}
-				else if (grid[i][3 - j + k] != 0 and grid[i][3 - j + k] == grid[i][3 - j + k + 1] and !grid[i][3 - j + k + 1].isMerge()) {
+				else if (grid[i][3 - j + k] != 0 and grid[i][3 - j + k] == grid[i][3 - j + k + 1]) {
 					grid[i][3 - j + k + 1] = grid[i][3 - j + k] * 2;
 					grid[i][3 - j + k] = 0;
 				}
