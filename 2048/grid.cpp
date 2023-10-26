@@ -7,6 +7,8 @@ Grid::Grid()
 		{
 			tab[i][j] = Cell();
 		}
+	checkEmptyCell();
+	checkEmptyCell();
 }
 
 int Grid::randomValue()
@@ -35,7 +37,7 @@ void Grid::checkEmptyCell()
 		return;
 	}
 
-	int randomNumber = rand() % emptyCellNumber + 1; 
+	int randomNumber = rand() % emptyCellNumber; 
 
 	emptyCellGrid[randomNumber]->setValue(randomValue());
 }
@@ -60,7 +62,7 @@ void Grid::slide() {
 
 void Grid::render() {
 
-	//system("cls");
+	system("cls");
 
 	if (hasLost()) {  
 		return;
