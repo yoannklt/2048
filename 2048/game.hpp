@@ -1,6 +1,9 @@
 #pragma once
 
+#include <iostream>
+#include <conio.h>
 #include <vector>
+#include "grid.hpp"
 
 class Game
 {
@@ -8,22 +11,14 @@ public:
 	Game();
 	~Game();
 
-	void init();
 	void handleEvents();
 	void update();
 	void render();
-	void clear();
-	void checkEmptyCell();
-	int randomValue();
-	void slide();
-	void slideTwo();
 	
 	bool running() { return isRunning; }
 
 private:
-	int grid[4][4] = { 0 };
-	bool isRunning;
-	bool lost = false;
+	bool isRunning = true;
 	int directionVect[2] = { 0, 0 };
 
 };

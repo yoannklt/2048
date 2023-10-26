@@ -7,6 +7,7 @@ public:
 	void merged() { merge = true; };
 	void resetMerge() { merge = false; };
 	void setValue(int newValue) { value = newValue; };
+	int getValue() { return value; };
 
 private:
 	int value = 0;
