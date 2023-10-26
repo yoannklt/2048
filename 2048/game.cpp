@@ -1,4 +1,5 @@
 ﻿#include "game.hpp"
+#include <vector>
 
 #define KEY_UP 72
 #define KEY_DOWN 80

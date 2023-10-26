@@ -8,7 +8,7 @@ public:
 	~Grid() {};
 
 	int randomValue();
-	void checkEmptyCell();
+	void generateRandomCell();
 	bool hasLost() { return lost; };
 	void render();
 	void slide();
@@ -16,4 +16,5 @@ public:
 private:
 	Cell tab[4][4]; 
 	bool lost = false;
+	std::vector<Cell*> emptyCellGrid;
 };

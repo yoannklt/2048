@@ -4,54 +4,38 @@ Grid::Grid()
 {
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
+			if (tab[i][j].getValue() == 0)
+				emptyCellGrid.push_back(&tab[i][j]);
+
+	srand(static_cast<unsigned>(time(0)));
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
 		{
 			tab[i][j] = Cell();
 		}
-}
+	generateRandomCell();
+	generateRandomCell();
+} 
 
 int Grid::randomValue()
 {
-	srand(static_cast<unsigned>(time(0)));
-
 	int randomValue = (rand() % 2) == 0 ? 2 : 4;
 	return randomValue;
 }
 
-void Grid::checkEmptyCell()
+void Grid::generateRandomCell()
 {
-	int emptyCellNumber = 0;
 
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (tab[i][j].getValue() == 0) 
-				emptyCellNumber++;
-		}
-	}
-
-	if (emptyCellNumber == 0) {
+	if (emptyCellGrid.empty()) {
 		this->lost = true;
 		return;
 	}
 
-	int randomNumber = rand() % emptyCellNumber + 1;
+	int randomNumber = rand() % emptyCellGrid.size();
 
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			if (tab[x][y].getValue() == 0) 
-			{
-				randomNumber--;
-				if (randomNumber == 0) {
-					tab[x][y].setValue(randomValue());
-					std::cout << "coubeh";
-					return;
-				}
-			}
-		}
-	}
+	emptyCellGrid[randomNumber]->setValue(randomValue()); 
+	emptyCellGrid.erase(emptyCellGrid.begin() + randomNumber); 
 }
 
 void Grid::slide() {
@@ -86,12 +70,12 @@ void Grid::slide() {
 			}
 		}
 	}
-	checkEmptyCell();
+	generateRandomCell();
 }
 
 void Grid::render() {
 
-	//system("cls");
+	system("cls");
 
 	if (hasLost()) {  
 		return;
