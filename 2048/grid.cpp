@@ -43,28 +43,25 @@ void Grid::slide() {
 
 		for (int i = 3; i >= 0; i--) {
 
-			for (int iCompare = 0; iCompare < i; iCompare++) {
-				
-				Cell i1 = tab[row][i];
-				int i1Value = tab[row][i].getValue();
-
-				Cell i2 = tab[row][iCompare];
-				int i2Value = tab[row][iCompare].getValue();
-
-				if (i2Value == 0) {
+			Cell& oCell1 = tab[row][i];
+			int iValue1 = oCell1.getValue();
+			for (int iCompare = i - 1; iCompare >= 0; iCompare--) 
+			{
+				Cell& oCell2 = tab[row][iCompare];
+				int iValue2 = oCell2.getValue();
+				if (iValue2 == 0)
 					continue;
-				}
 
-				if (i1Value == 0) {
-					i1.setValue(i2Value);
-					i2.setValue(0);
+				if (iValue1 == 0) {
+					oCell1.setValue(iValue2);
+					oCell2.setValue(0);
 					i++;
 					break;
 				}
 
-				if (i1Value == i2Value) {
-					i1.setValue(i1Value + i2Value);
-					i2.setValue(0);
+				if (iValue1 == iValue2) {
+					oCell1.setValue(iValue1 + iValue2);
+					oCell2.setValue(0);
 					break;
 				}
 			}
