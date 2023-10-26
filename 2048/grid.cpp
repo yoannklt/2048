@@ -19,39 +19,25 @@ int Grid::randomValue()
 
 void Grid::checkEmptyCell()
 {
+	std::vector<Cell*> emptyCellGrid; 
 	int emptyCellNumber = 0;
 
 	for (int i = 0; i < 4; i++)
-	{
 		for (int j = 0; j < 4; j++)
-		{
-			if (tab[i][j].getValue() == 0) 
+			if (tab[i][j].getValue() == 0)
+			{
 				emptyCellNumber++;
-		}
-	}
+				emptyCellGrid.push_back(&tab[i][j]);
+			}
 
 	if (emptyCellNumber == 0) {
 		this->lost = true;
 		return;
 	}
 
-	int randomNumber = rand() % emptyCellNumber + 1;
+	int randomNumber = rand() % emptyCellNumber + 1; 
 
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			if (tab[x][y].getValue() == 0) 
-			{
-				randomNumber--;
-				if (randomNumber == 0) {
-					tab[x][y].setValue(randomValue());
-					std::cout << "coubeh";
-					return;
-				}
-			}
-		}
-	}
+	emptyCellGrid[randomNumber]->setValue(randomValue());
 }
 
 void Grid::slide() {
