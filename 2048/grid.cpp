@@ -55,16 +55,33 @@ void Grid::checkEmptyCell()
 }
 
 void Grid::slide() {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 1; j < 4; j++) {
-			for (int k = 0; k < j; k++) {
-				if (tab[i][3 - j + k].getValue() != 0 and tab[i][3 - j + k + 1].getValue() == 0) {
-					tab[i][3 - j + k + 1].setValue(tab[i][3 - j + k].getValue());
-					tab[i][3 - j + k].setValue(0);
+	for (int row = 0; row < 4; row++) {
+
+		for (int i = 3; i >= 0; i--) {
+
+			for (int iCompare = 0; iCompare < i; iCompare++) {
+				
+				Cell i1 = tab[row][i];
+				int i1Value = tab[row][i].getValue();
+
+				Cell i2 = tab[row][iCompare];
+				int i2Value = tab[row][iCompare].getValue();
+
+				if (i2Value == 0) {
+					continue;
 				}
-				else if (tab[i][3 - j + k].getValue() != 0 and tab[i][3 - j + k].getValue() == tab[i][3 - j + k + 1].getValue() and !tab[i][3 - j + k + 1].isMerge()) {
-					tab[i][3 - j + k + 1].setValue(tab[i][3 - j + k].getValue() * 2);
-					tab[i][3 - j + k].setValue(0);
+
+				if (i1Value == 0) {
+					i1.setValue(i2Value);
+					i2.setValue(0);
+					i++;
+					break;
+				}
+
+				if (i1Value == i2Value) {
+					i1.setValue(i1Value + i2Value);
+					i2.setValue(0);
+					break;
 				}
 			}
 		}
