@@ -55,6 +55,7 @@ void Grid::slide() {
 				if (iValue1 == 0) {
 					oCell1.setValue(iValue2);
 					oCell2.setValue(0);
+					emptyCellGrid.push_back(&oCell2);    
 					i++;
 					break;
 				}
@@ -62,6 +63,7 @@ void Grid::slide() {
 				if (iValue1 == iValue2) {
 					oCell1.setValue(iValue1 + iValue2);
 					oCell2.setValue(0);
+					emptyCellGrid.push_back(&oCell2);
 					break;
 				}
 			}
@@ -72,12 +74,12 @@ void Grid::slide() {
 
 void Grid::render() {
 
-	system("cls");
+	system("cls"); 
 
 	if (hasLost()) {  
 		return;
-	}
-	std::cout << std::endl;
+	} 
+	std::cout << std::endl; 
 
 	for (int i = 0; i < 4; i++)
 	{

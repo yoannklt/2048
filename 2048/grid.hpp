@@ -12,9 +12,12 @@ public:
 	bool hasLost() { return lost; };
 	void render();
 	void slide();
-
-private:
-	Cell tab[4][4]; 
+	 
+private: 
 	bool lost = false;
 	std::vector<Cell*> emptyCellGrid;
+
+protected:
+	Cell tab[4][4];
+
 };
