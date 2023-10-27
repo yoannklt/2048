@@ -53,16 +53,14 @@ void Grid::slide() {
 					continue;
 
 				if (iValue1 == 0) {
-					oCell1.setValue(iValue2);
-					oCell2.setValue(0);
+					swapCell(&oCell1, &oCell2);
 					emptyCellGrid.push_back(&oCell2);    
 					i++;
 					break;
 				}
 
 				if (iValue1 == iValue2) {
-					oCell1.setValue(iValue1 + iValue2);
-					oCell2.setValue(0);
+					swapCell(&oCell1, &oCell2);
 					emptyCellGrid.push_back(&oCell2);
 					break;
 				}
