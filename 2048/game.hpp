@@ -3,11 +3,13 @@
 #include <iostream>
 #include <conio.h>
 #include <vector>
-#include "grid.hpp"
 
+#include "grid.hpp"
 
 class Game
 {
+	Grid grid;
+
 public:
 	Game();
 	~Game();
@@ -20,6 +22,6 @@ public:
 
 private:
 	bool isRunning = true;
-	int directionVect[2] = { 0, 0 };
+	
 
 };
