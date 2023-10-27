@@ -13,7 +13,7 @@ public:
 	void render();
 	void slide();
 
-	void swapCell(Cell** cell1, Cell** cell2);
+	void swapCell(Cell* cell1, Cell* cell2);
 	 
 private:
 	bool lost = false;

@@ -104,9 +104,9 @@ void Grid::render() {
 	std::cout << " " << "-----------------" << std::endl;
 }
 
-void Grid::swapCell(Cell** cell1, Cell** cell2)
+void Grid::swapCell(Cell* cell1, Cell* cell2)
 {
-	Cell** intermediateCell = cell1;
+	Cell* intermediateCell = cell1;
 	*cell1 = *cell2;
 	*cell2 = *intermediateCell;
 }
