@@ -66,6 +66,7 @@ void Grid::slide() {
 					emptyCellGrid.push_back(&oCell2);
 					break;
 				}
+				break;
 			}
 		}
 	}

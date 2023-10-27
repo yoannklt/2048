@@ -13,7 +13,7 @@ public:
 	void render();
 	void slide();
 	 
-private: 
+private:
 	bool lost = false;
 	std::vector<Cell*> emptyCellGrid;
 
