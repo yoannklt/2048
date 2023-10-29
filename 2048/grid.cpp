@@ -42,7 +42,10 @@ void Grid::generateRandomCell(int i /*= -1*/)
 	emptyCellGrid.erase(emptyCellGrid.begin() + randomNumber); 
 }
 
-void Grid::slide() {
+bool Grid::slide()
+{
+	bool doesMove = false;
+
 	int iAdd = 0;
 	if (directionVect[1] == -1) {
 		iAdd = 3;
@@ -62,14 +65,17 @@ void Grid::slide() {
 			int iValue1 = (*oCell1)->getValue();
 			for (int iCompare = i - 1; iCompare >= 0; iCompare--) 
 			{
-				Cell** oCell2 = &tab[row][iCompare];
+				int indexCompareOne = row * (directionVect[0] * directionVect[0]) + directionVect[1] * iCompare + iAdd;
+				int indexCompareTwo = row * (directionVect[1] * directionVect[1]) + directionVect[0] * iCompare + yAdd;
+				Cell** oCell2 = &tab[indexCompareOne][indexCompareTwo];
 				int iValue2 = (*oCell2)->getValue();
 				if (iValue2 == 0)
 					continue;
 
 				if (iValue1 == 0) {
-					swapCell(oCell1, oCell2);   
+					swapCell(oCell1, oCell2);
 					i++;
+					doesMove = true;
 					break;
 				}
 
@@ -77,6 +83,7 @@ void Grid::slide() {
 					(*oCell1)->setValue(iValue1 + iValue2);
 					(*oCell2)->setValue(0);
 					emptyCellGrid.push_back(*oCell2);
+					doesMove = true;
 					break;
 				}
 
@@ -86,6 +93,7 @@ void Grid::slide() {
 	}
 	directionVect[0] = 0;
 	directionVect[1] = 0;
+	return doesMove;
 }
 
 void Grid::render() {
@@ -97,26 +105,52 @@ void Grid::render() {
 	} 
 	std::cout << std::endl; 
 
+	const char BOX_WALL[4] = " | ";
+
 	for (int i = 0; i < 4; i++)
 	{
-		std::cout << " " << "-----------------" << std::endl << " | ";
+		std::cout << " " << "-----------------------------" << std::endl << " | ";
 		for (int j = 0; j < 4; j++)
 		{
 			switch (tab[i][j]->getValue()) 
 			{
 			case 0:
-				std::cout << "  | ";
+				std::cout << "    " << BOX_WALL;
+				break;
+
+			case 2:
+			case 4:
+			case 8:
+				std::cout << " " << tab[i][j]->getValue() << "  " << BOX_WALL;
+				break;
+				
+			case 16:
+			case 32:
+			case 64:
+				std::cout << " " << tab[i][j]->getValue() << " " << BOX_WALL;
+				break;
+				
+			case 128:
+			case 256:
+			case 512:
+				std::cout << tab[i][j]->getValue() << " " << BOX_WALL;
+				break;
+				
+			case 1024:
+			case 2048:
+			case 4096:
+				std::cout << tab[i][j]->getValue() << "" << BOX_WALL;
 				break;
 
 			default:
-				std::cout << tab[i][j]->getValue() << " | "; 
+				std::cout << tab[i][j]->getValue() << BOX_WALL;
 				break;
 			}
 		}
 		std::cout << std::endl;
 
 	}
-	std::cout << " " << "-----------------" << std::endl;
+	std::cout << " " << "-----------------------------" << std::endl;
 }
 
 void Grid::swapCell(Cell** cell1, Cell** cell2)
@@ -124,4 +158,28 @@ void Grid::swapCell(Cell** cell1, Cell** cell2)
 	Cell* intermediateCell = *cell1;
 	*cell1 = *cell2;
 	*cell2 = intermediateCell;
+}
+
+void Grid::isDefeat()
+{
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 3; j++) {
+			int tabIJ = tab[i][j]->getValue();
+			int tabIJNext = tab[i][j + 1]->getValue();
+			if (tabIJ == tabIJNext or tabIJ == 0)
+				return;
+		}
+		if (tab[i][3]->getValue() == 0)
+			return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 3; j++) {
+			int tabIJ = tab[j][i]->getValue();
+			int tabIJNext = tab[j + 1][i]->getValue();
+			if (tabIJ == tabIJNext)
+				return;
+		}
+	}
+	lost = true;
 }
